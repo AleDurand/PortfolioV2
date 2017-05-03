@@ -3,11 +3,12 @@
 -- -----------------------------------------------------
 -- Schema portfolio
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `portfolio` ;
 
 -- -----------------------------------------------------
 -- Schema portfolio
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `portfolio`; -- DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `portfolio`; 
 USE `portfolio` ;
 
 -- -----------------------------------------------------
@@ -20,10 +21,10 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`album` (
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NULL,
   `path` VARCHAR(200) NULL,
-  `type` VARCHAR(45) NULL,
-  `read_only` TINYINT(1) NOT NULL,
-  `ts_create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-  `created_by` VARCHAR(50) DEFAULT 'system', 
+  `type` INT NULL DEFAULT 0,
+  `read_only` TINYINT(1) NULL,
+  `ts_create` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` VARCHAR(50) NULL,
   `ts_update` TIMESTAMP NULL,
   `updated_by` VARCHAR(50) NULL,
   PRIMARY KEY (`id`))
@@ -39,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`image` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `path` VARCHAR(200) NULL,
   `album_id` INT NOT NULL,
-  `ts_create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-  `created_by` VARCHAR(50) NULL DEFAULT 'system', 
+  `ts_create` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` VARCHAR(50) NULL,
   `ts_update` TIMESTAMP NULL,
   `updated_by` VARCHAR(50) NULL,
   PRIMARY KEY (`id`, `album_id`),
@@ -100,4 +101,3 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`user_has_authority` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
