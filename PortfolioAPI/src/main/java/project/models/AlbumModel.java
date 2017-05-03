@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import project.exceptions.CustomException;
 
 @Entity
 @Table(name = "album")
@@ -35,15 +38,18 @@ public class AlbumModel {
 	@Column(name = "path", nullable = false)
 	private String path;
 
+	@OneToMany
+	@JoinColumn(name = "album_id")
+	private List<PhotoModel> photos;
+
+	@Column(name = "read_only", insertable = false, updatable = false)
+	private boolean readOnly;
+
 	@Column(name = "ts_create", insertable = false)
 	private Date creationTime;
 
 	@Column(name = "ts_update", insertable = false)
 	private Date updateTime;
-
-	@OneToMany
-	@JoinColumn(name = "album_id")
-	private List<PhotoModel> photos;
 
 	public AlbumModel() {
 		super();
@@ -97,22 +103,36 @@ public class AlbumModel {
 		this.photos = photos;
 	}
 
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+	
+	public Date getCreationTime() {
+		return creationTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
 	@PrePersist
 	protected void onCreate() {
 		this.creationTime = new Date();
 	}
 
-	public Date getCreationTime() {
-		return creationTime;
-	}
-
 	@PreUpdate
 	protected void onUpdate() {
 		this.updateTime = new Date();
+		if (this.readOnly) {
+			throw new CustomException("exception.entity.read_only", null);
+		}
 	}
-
-	public Date getUpdateTime() {
-		return updateTime;
+	
+	@PreRemove
+	protected void onRemove() {
+		if (this.readOnly) {
+			throw new CustomException("exception.entity.read_only", null);
+		}
 	}
 
 }

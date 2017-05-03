@@ -13,4 +13,5 @@ INSERT INTO portfolio.user_has_authority (user_id, authority_id) VALUES ('mrodec
 INSERT INTO portfolio.user_has_authority (user_id, authority_id) VALUES ('msanchez', 1);
 
 -- ALBUM --
-INSERT INTO portfolio.album (id, name, description, path, type) VALUES (1, 'album1', 'description1', 'c4ca4238a0b923820dcc509a6f75849b', '0');
+INSERT INTO portfolio.album (id, name, description, path, type, read_only) VALUES (1, 'Covers', 'Covers', 'c4ca4238a0b923820dcc509a6f75849b', '1', 1);
+INSERT INTO portfolio.album (id, name, description, path, type) VALUES (2, 'album1', 'description1', 'c4ca4238a0b923820dcc509a6f75849c', '0');
