@@ -11,7 +11,10 @@ public interface AlbumService {
 
 	public AlbumModel read(Integer id);
 
+	public AlbumModel update(Integer id, AlbumModel album);
+
 	public void delete(Integer id);
 
 	public Page<AlbumModel> getAll(Integer id, String name, Pageable pageable);
+
 }

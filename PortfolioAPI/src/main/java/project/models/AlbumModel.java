@@ -1,5 +1,6 @@
 package project.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -31,8 +34,14 @@ public class AlbumModel {
 
 	@Column(name = "path", nullable = false)
 	private String path;
-	
-	@OneToMany	
+
+	@Column(name = "ts_create", insertable = false)
+	private Date creationTime;
+
+	@Column(name = "ts_update", insertable = false)
+	private Date updateTime;
+
+	@OneToMany
 	@JoinColumn(name = "album_id")
 	private List<PhotoModel> photos;
 
@@ -86,6 +95,24 @@ public class AlbumModel {
 
 	public void setPhotos(List<PhotoModel> photos) {
 		this.photos = photos;
+	}
+
+	@PrePersist
+	protected void onCreate() {
+		this.creationTime = new Date();
+	}
+
+	public Date getCreationTime() {
+		return creationTime;
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		this.updateTime = new Date();
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
 }

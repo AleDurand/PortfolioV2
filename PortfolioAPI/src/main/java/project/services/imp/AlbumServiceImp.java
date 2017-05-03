@@ -39,6 +39,17 @@ public class AlbumServiceImp implements AlbumService {
 		}
 		return albumRepository.findOne(id);
 	}
+	
+	@Override
+	public AlbumModel update(Integer id, AlbumModel album) {
+		if (!albumRepository.exists(id)) {
+			throw new EntityNotFoundException("resource.not_found", null);
+		}
+		AlbumModel current = albumRepository.findOne(id);
+		current.setName(album.getName());
+		current.setDescription(album.getDescription());
+		return albumRepository.save(current);
+	}
 
 	@Override
 	public void delete(Integer id) {

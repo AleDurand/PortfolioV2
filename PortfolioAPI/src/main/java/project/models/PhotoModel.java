@@ -1,5 +1,7 @@
 package project.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,6 +25,9 @@ public class PhotoModel {
 
 	@Column(name = "path", nullable = false)
 	private String path;
+	
+	@Column(name = "ts_create", insertable = false)
+	private Date creationTime;
 
 	@OneToOne	
 	@JsonIgnore
@@ -46,6 +52,15 @@ public class PhotoModel {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	@PrePersist
+	protected void onCreate() {
+		this.creationTime = new Date();
+	}
+
+	public Date getCreationTime() {
+		return creationTime;
 	}
 
 	public AlbumModel getAlbum() {

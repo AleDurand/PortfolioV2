@@ -40,6 +40,12 @@ public class AlbumController {
 		AlbumModel toReturn = albumService.read(id);
 		return new ResponseEntity<>(toReturn, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+	public ResponseEntity<AlbumModel> update(@PathVariable("id") Integer id, @Validated @RequestBody AlbumModel album) {
+		AlbumModel toReturn = albumService.update(id, album);
+		return new ResponseEntity<>(toReturn, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
