@@ -27,7 +27,7 @@ public class PhotoServiceImp implements PhotoService {
 
 	@Override
 	@Transactional
-	public void addPhoto(Integer albumId, MultipartFile file) {
+	public PhotoModel addPhoto(Integer albumId, MultipartFile file) {
 		if (!albumRepository.exists(albumId)) {
 			throw new EntityNotFoundException("resource.not_found", null);
 		}
@@ -36,7 +36,7 @@ public class PhotoServiceImp implements PhotoService {
 		PhotoModel photo = new PhotoModel();
 		photo.setPath(path);
 		photo.setAlbum(album);
-		this.photoRepository.save(photo);
+		return this.photoRepository.save(photo);
 	}
 
 	@Override

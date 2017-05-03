@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import project.models.AlbumModel;
+import project.models.PhotoModel;
 import project.services.PhotoService;
 import project.validators.PhotoValidator;
 
@@ -27,9 +27,9 @@ public class PhotoController {
 	private PhotoValidator photoValidator;
 
 	@RequestMapping(value = "/photos", method = RequestMethod.POST, consumes = "multipart/form-data")
-	public ResponseEntity<AlbumModel> create(@PathVariable("albumId") Integer albumId, @RequestParam("file") MultipartFile file) {
-		photoService.addPhoto(albumId, file);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<PhotoModel> create(@PathVariable("albumId") Integer albumId, @RequestParam("file") MultipartFile file) {
+		PhotoModel toReturn = photoService.addPhoto(albumId, file);
+		return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/photos/{photoId}", method = RequestMethod.DELETE)
