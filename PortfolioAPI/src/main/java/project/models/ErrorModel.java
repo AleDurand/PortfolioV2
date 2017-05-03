@@ -7,16 +7,19 @@ public class ErrorModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer status;
+	private String code;
 	private String field;
 	private String message;
 
-	public ErrorModel(Integer status, String message) {
+	public ErrorModel(Integer status, String code, String message) {
 		this.status = status;
+		this.code = code;
 		this.message = message;
 	}
 
-	public ErrorModel(Integer status, String field, String message) {
+	public ErrorModel(Integer status, String code, String field, String message) {
 		this.status = status;
+		this.code = code;
 		this.field = field;
 		this.message = message;
 	}
@@ -27,6 +30,14 @@ public class ErrorModel implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getField() {

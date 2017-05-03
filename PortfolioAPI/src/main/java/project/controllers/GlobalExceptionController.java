@@ -83,16 +83,16 @@ public class GlobalExceptionController {
 	@ExceptionHandler({ Exception.class, RuntimeException.class })
 	public ResponseEntity<?> handleUnexpectedExceptions(Exception e) {
 		LOGGER.error("EXCEPTION", e);
-		ErrorModel error = new ErrorModel(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		ErrorModel error = new ErrorModel(HttpStatus.INTERNAL_SERVER_ERROR.value(), null, e.getMessage());
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	private ErrorModel getErrorMessage(String code, Object[] args, String field, HttpStatus httpStatus) {
 		try {
 			String message = messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-			return new ErrorModel(httpStatus.value(), field, message);
+			return new ErrorModel(httpStatus.value(), code, field, message);
 		} catch (NoSuchMessageException ex) {
-			return new ErrorModel(httpStatus.value(), code);
+			return new ErrorModel(httpStatus.value(), code, null);
 		}
 	}
 }
