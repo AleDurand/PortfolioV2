@@ -2,12 +2,12 @@ package project.services.imp;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +32,11 @@ public class StorageServiceImp implements StorageService {
             	directory.mkdirs();
             }
             String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-            String name = HashGeneratorUtils.generateMD5(Base64.encode(file.getBytes()).toString()).concat(".").concat(extension);
-            Path path = directory.toPath().resolve(name);
-            Files.copy(file.getInputStream(), path);
+            String name = HashGeneratorUtils.generateMD5(file.getBytes()).concat(".").concat(extension);
+            Files.copy(file.getInputStream(), directory.toPath().resolve(name));            
             return basepath + File.separator + name;
+        } catch(FileAlreadyExistsException e) {
+        	throw new StorageException("storage.file_already_exists", null);
         } catch (IOException e) {
             throw new StorageException("storage.upload_error", null);
         }

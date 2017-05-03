@@ -51,8 +51,8 @@ public class PhotoServiceImp implements PhotoService {
 		}
 		
 		PhotoModel photo = photoRepository.findOne(photoId);
-		storageService.delete(photo.getPath());
 		photoRepository.delete(photoId);
+		storageService.delete(photo.getPath());
 	}
 
 }
