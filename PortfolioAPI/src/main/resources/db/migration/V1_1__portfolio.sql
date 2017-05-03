@@ -23,7 +23,9 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`album` (
   `type` VARCHAR(45) NULL,
   `read_only` TINYINT(1) NOT NULL,
   `ts_create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-  `ts_update` TIMESTAMP DEFAULT NULL,
+  `created_by` VARCHAR(50) DEFAULT 'system', 
+  `ts_update` TIMESTAMP NULL,
+  `updated_by` VARCHAR(50) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -37,7 +39,10 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`image` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `path` VARCHAR(200) NULL,
   `album_id` INT NOT NULL,
-  `ts_create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `ts_create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+  `created_by` VARCHAR(50) NULL DEFAULT 'system', 
+  `ts_update` TIMESTAMP NULL,
+  `updated_by` VARCHAR(50) NULL,
   PRIMARY KEY (`id`, `album_id`),
   INDEX `fk_image_album1_idx` (`album_id` ASC),
   CONSTRAINT `fk_image_album1`

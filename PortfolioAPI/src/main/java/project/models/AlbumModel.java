@@ -5,20 +5,23 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import project.exceptions.CustomException;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "album")
+@EntityListeners(AuditingEntityListener.class)
 public class AlbumModel {
 
 	@Id
@@ -42,14 +45,24 @@ public class AlbumModel {
 	@JoinColumn(name = "album_id")
 	private List<PhotoModel> photos;
 
-	@Column(name = "read_only", insertable = false, updatable = false)
+	@Column(name = "read_only")
 	private boolean readOnly;
-
-	@Column(name = "ts_create", insertable = false)
+	
+	@CreatedDate
+	@Column(name = "ts_create", nullable = false)
 	private Date creationTime;
 
-	@Column(name = "ts_update", insertable = false)
+	@LastModifiedDate
+	@Column(name = "ts_update", nullable = false)
 	private Date updateTime;
+
+	@CreatedBy
+	@Column(name = "created_by", nullable = false)
+	private String createdBy;
+
+	@LastModifiedBy
+	@Column(name = "updated_by", nullable = false)
+	private String updatedBy;
 
 	public AlbumModel() {
 		super();
@@ -115,24 +128,12 @@ public class AlbumModel {
 		return updateTime;
 	}
 
-	@PrePersist
-	protected void onCreate() {
-		this.creationTime = new Date();
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	@PreUpdate
-	protected void onUpdate() {
-		this.updateTime = new Date();
-		if (this.readOnly) {
-			throw new CustomException("exception.entity.read_only", null);
-		}
-	}
-	
-	@PreRemove
-	protected void onRemove() {
-		if (this.readOnly) {
-			throw new CustomException("exception.entity.read_only", null);
-		}
+	public String getUpdatedBy() {
+		return updatedBy;
 	}
 
 }

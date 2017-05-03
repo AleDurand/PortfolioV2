@@ -10,13 +10,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Configuration
 @ComponentScan
+@EnableJpaAuditing
 @EnableAutoConfiguration
 public class Application extends SpringBootServletInitializer {
 
@@ -52,5 +57,20 @@ public class Application extends SpringBootServletInitializer {
 		bean.setValidationMessageSource(messageSource());
 		return bean;
 	}
+	
+	@Bean
+    public AuditorAware<String> createAuditorProvider() {
+        return new AuditorAware<String>() {
+			@Override
+			public String getCurrentAuditor() {
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				return auth.getName();
+			}
+		};
+    }
+
+	
+
+
 
 }
