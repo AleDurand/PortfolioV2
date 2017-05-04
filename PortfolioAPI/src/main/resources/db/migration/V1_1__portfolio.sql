@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`album` (
   `description` VARCHAR(45) NULL,
   `path` VARCHAR(200) NULL,
   `type` INT NULL DEFAULT 0,
-  `read_only` TINYINT(1) NULL,
+  `read_only` TINYINT(1) NULL DEFAULT 0,
   `ts_create` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` VARCHAR(50) NULL,
   `ts_update` TIMESTAMP NULL,
