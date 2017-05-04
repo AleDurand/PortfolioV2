@@ -80,10 +80,10 @@ public class AlbumControllerTest {
 	@WithMockUser(authorities = { "Administrator" })
 	public void create() throws Exception {
 		// @formatter:off
-		AlbumModel club = new AlbumModel();
-		club.setName("name");
-		club.setDescription("description");
-		club.setPath("path");
+		AlbumModel album = new AlbumModel();
+		album.setName("name");
+		album.setDescription("description");
+		album.setPath("path");
 		
 		AlbumModel expectedAlbum = new AlbumModel();
 		expectedAlbum.setId(1);
@@ -94,7 +94,7 @@ public class AlbumControllerTest {
 		
 		mockMvc.perform(MockMvcRequestBuilders.post("/albums")
 			.contentType(MediaType.APPLICATION_JSON)
-			.content(mapper.writeValueAsBytes(club))
+			.content(mapper.writeValueAsBytes(album))
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$.id", is(1)))

@@ -64,7 +64,7 @@ public class Application extends SpringBootServletInitializer {
 			@Override
 			public String getCurrentAuditor() {
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-				return auth.getName();
+				return auth != null ? auth.getName() : null;
 			}
 		};
     }

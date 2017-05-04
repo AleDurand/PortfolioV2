@@ -29,6 +29,7 @@ import project.models.AlbumModel;
 import project.models.QAlbumModel;
 import project.repositories.AlbumRepository;
 import project.services.AlbumService;
+import project.utils.HashGeneratorUtils;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -51,40 +52,40 @@ public class AlbumServiceImpTest {
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-		AlbumModel expectedClub = new AlbumModel();
-		expectedClub.setId(1);
-		expectedClub.setName("name");
-		expectedClub.setDescription("address");
-		expectedClub.setPath("url");
-		when(albumRepositoryMock.save(expectedClub)).thenReturn(expectedClub);
+		AlbumModel expectedAlbum = new AlbumModel();
+		expectedAlbum.setId(1);
+		expectedAlbum.setName("name");
+		expectedAlbum.setDescription("address");
+		expectedAlbum.setPath(HashGeneratorUtils.generateMD5("1"));
+		when(albumRepositoryMock.save(expectedAlbum)).thenReturn(expectedAlbum);
 
-		AlbumModel actualClub = albumService.create(expectedClub);
+		AlbumModel actualAlbum = albumService.create(expectedAlbum);
 		
-		assertEquals(expectedClub.getId(), actualClub.getId());
-		assertEquals(expectedClub.getName(), actualClub.getName());
-		assertEquals(expectedClub.getDescription(), actualClub.getDescription());
-		assertEquals(expectedClub.getPath(), actualClub.getPath());
+		assertEquals(expectedAlbum.getId(), actualAlbum.getId());
+		assertEquals(expectedAlbum.getName(), actualAlbum.getName());
+		assertEquals(expectedAlbum.getDescription(), actualAlbum.getDescription());
+		assertEquals(expectedAlbum.getPath(), actualAlbum.getPath());
 		// @formatter:on
 	}
 
 	@Test
 	public void read() throws Exception {
 		// @formatter:off
-		AlbumModel expectedClub = new AlbumModel();
-		expectedClub.setId(1);
-		expectedClub.setName("name");
-		expectedClub.setDescription("address");
-		expectedClub.setPath("url");
+		AlbumModel expectedAlbum = new AlbumModel();
+		expectedAlbum.setId(1);
+		expectedAlbum.setName("name");
+		expectedAlbum.setDescription("description");
+		expectedAlbum.setPath(HashGeneratorUtils.generateMD5("1"));
 		
 		when(albumRepositoryMock.exists(1)).thenReturn(true);
-		when(albumRepositoryMock.findOne(1)).thenReturn(expectedClub);
+		when(albumRepositoryMock.findOne(1)).thenReturn(expectedAlbum);
 
-		AlbumModel actualClub = albumService.read(1);
+		AlbumModel actualAlbum = albumService.read(1);
 		
-		assertEquals(expectedClub.getId(), actualClub.getId());
-		assertEquals(expectedClub.getName(), actualClub.getName());
-		assertEquals(expectedClub.getDescription(), actualClub.getDescription());
-		assertEquals(expectedClub.getPath(), actualClub.getPath());
+		assertEquals(expectedAlbum.getId(), actualAlbum.getId());
+		assertEquals(expectedAlbum.getName(), actualAlbum.getName());
+		assertEquals(expectedAlbum.getDescription(), actualAlbum.getDescription());
+		assertEquals(expectedAlbum.getPath(), actualAlbum.getPath());
 		// @formatter:on
 	}
 
@@ -120,8 +121,8 @@ public class AlbumServiceImpTest {
 		// @formatter:off
 		Page<AlbumModel> expectedAlbums = new PageImpl<AlbumModel>(Arrays.asList(new AlbumModel()));
 		Pageable pageable = new PageRequest(0, 1000);
-		QAlbumModel club = QAlbumModel.albumModel;		
-		when(albumRepositoryMock.findAll(club.instanceOfAny(), pageable)).thenReturn(expectedAlbums);
+		QAlbumModel album = QAlbumModel.albumModel;		
+		when(albumRepositoryMock.findAll(album.instanceOfAny(), pageable)).thenReturn(expectedAlbums);
 
 		Page<AlbumModel> actualAlbums = albumService.getAll(null, null, pageable);
 		
