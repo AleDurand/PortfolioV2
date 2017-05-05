@@ -8,7 +8,7 @@ DROP SCHEMA IF EXISTS `portfolio` ;
 -- -----------------------------------------------------
 -- Schema portfolio
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `portfolio`; 
+CREATE SCHEMA IF NOT EXISTS `portfolio`; -- DEFAULT CHARACTER SET utf8 ;
 USE `portfolio` ;
 
 -- -----------------------------------------------------
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`image` (
   CONSTRAINT `fk_image_album1`
     FOREIGN KEY (`album_id`)
     REFERENCES `portfolio`.`album` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -101,3 +101,4 @@ CREATE TABLE IF NOT EXISTS `portfolio`.`user_has_authority` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+

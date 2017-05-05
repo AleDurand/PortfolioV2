@@ -21,3 +21,6 @@ gradle-app.setting
 
 # Query DSL files
 src/main/generated
+
+# Log files
+*.log

@@ -35,8 +35,8 @@ public class AlbumModel {
 	@Column(name = "description", nullable = false)
 	private String description;
 
-	@Column(name = "type", columnDefinition = "INT DEFAULT 0")
-	private AlbumType type;
+	@Column(name = "type")
+	private AlbumType type = AlbumType.UNKNOWN;;
 
 	@Column(name = "path", nullable = false)
 	private String path;
