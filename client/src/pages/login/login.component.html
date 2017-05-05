@@ -1,0 +1,11 @@
+<div>
+  <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()" novalidate>
+
+    <input md-input formControlName="username" length="50" type="text">
+  
+    <input md-input formControlName="password" length="50" type="password">
+    <div>
+      <button md-button [disabled]="loading || !loginForm.valid" type="submit">Login</button>
+    </div>
+  </form>
+</div>

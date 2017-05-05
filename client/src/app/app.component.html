@@ -1,0 +1,32 @@
+<header>
+  <nav md-tab-nav-bar>
+    <md-toolbar color="primary">
+      <span>
+        <a md-tab-link routerLink="/" class="brand-logo">
+          <img src="assets/marce_logo_opt.png" alt="logo" />
+        </a>
+      </span>
+      <span class="fill-remaining-space"></span>
+      <span>
+        <a md-tab-link *ngFor="let tab of tabs;" [routerLink]="tab.url" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">{{ tab.title }}</a>
+      </span>
+    </md-toolbar>
+  </nav>
+</header>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+
+<footer>
+  <md-toolbar color="primary">
+    <span class="footer-description">
+      <h3>Marcela Sanchez Fotograf&iacute;as</h3>
+      <p>Espacio dedicado a mostrar las fotos tomadas en diferentes eventos.</p>
+    </span>
+    <span class="fill-remaining-space"></span>
+    <span>
+      <p class="footer-copyright">© 2017 Alejandro Durand - Mariano Rodecker</p>
+    </span>
+  </md-toolbar>
+</footer>
