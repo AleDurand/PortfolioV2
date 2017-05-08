@@ -23,6 +23,7 @@ sourceSets {
 
 configurations {
     querydslapt
+    providedRuntime
 }
 
 buildscript {
@@ -42,6 +43,13 @@ buildscript {
 war {
     baseName = 'PortfolioAPI'
     version =  '1.0'
+    manifest {
+        attributes 'Main-Class': 'project.Application'
+    }
+}
+
+springBoot {
+    mainClass = "project.Application"
 }
 
 repositories {
@@ -58,7 +66,8 @@ dependencies {
     compile('commons-io:commons-io:2.5')
     compile("mysql:mysql-connector-java:5.1.36")
     compile("log4j:log4j:1.2.17")	
-    compile("com.h2database:h2")	
+    compile("com.h2database:h2")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
     testCompile("junit:junit:4.+")     
