@@ -18,6 +18,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import project.exceptions.CustomException;
 import project.exceptions.EntityNotFoundException;
+import project.exceptions.StorageFileNotFoundException;
 import project.models.ErrorModel;
 
 @ControllerAdvice
@@ -56,7 +57,7 @@ public class GlobalExceptionController {
 		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler({ EntityNotFoundException.class })
+	@ExceptionHandler({ EntityNotFoundException.class, StorageFileNotFoundException.class })
 	public ResponseEntity<?> handleNotFounds(CustomException e) {
 		ErrorModel message = getErrorMessage(e.getCode(), e.getArgs(), null, HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);

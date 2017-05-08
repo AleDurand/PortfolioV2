@@ -1,3 +1,20 @@
-<div *ngFor="let album of albums; ">
-  <h1>{{ album.name }}</h1>
-</div>
+<md-card class="example-card" *ngFor="let album of albums; ">
+  <md-card-header>
+    <div md-card-avatar>
+      <img src="assets/default.jpg"/>
+    </div>
+    <md-card-title>{{ album.name }}</md-card-title>
+    <md-card-subtitle>{{ album.creationTime | date }}</md-card-subtitle>
+  </md-card-header>
+  <div class="example-header-image">
+    <img *ngIf="album.photos.length !== 0" md-card-image [src]="album.photos[0]?.path | safe"/>
+    <img *ngIf="album.photos.length === 0" md-card-image src="assets/default.jpg"/>
+  </div>
+  <md-card-content>
+    <p>{{ album.description }}</p>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button>LIKE</button>
+    <button md-button>SHARE</button>
+  </md-card-actions>
+</md-card>

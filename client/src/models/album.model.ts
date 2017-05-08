@@ -13,6 +13,6 @@ export class Album extends ModelFactory {
   @alias('readOnly') readOnly: boolean;
   @alias('creationTime', Date) creationTime: Date;
   @alias('createdBy') createdBy: string;
-  @alias('creationTime', Date) updateTime: Date;
+  @alias('updateTime', Date) updateTime: Date;
   @alias('updatedBy') updatedBy: string;
 }

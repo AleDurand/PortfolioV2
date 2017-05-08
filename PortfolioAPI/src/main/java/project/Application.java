@@ -51,17 +51,17 @@ public class Application extends SpringBootServletInitializer {
 		builder.failOnUnknownProperties(false);
 		return builder;
 	}
-	
+
 	@Bean
 	public LocalValidatorFactoryBean validator() {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
 		bean.setValidationMessageSource(messageSource());
 		return bean;
 	}
-	
+
 	@Bean
-    public AuditorAware<String> createAuditorProvider() {
-        return new AuditorAware<String>() {
+	public AuditorAware<String> createAuditorProvider() {
+		return new AuditorAware<String>() {
 			@Override
 			public String getCurrentAuditor() {
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
